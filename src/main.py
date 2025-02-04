@@ -1,7 +1,7 @@
-from data_processing import read_sentiment_examples, build_vocab, bag_of_words
-from naive_bayes import NaiveBayes
-from logistic_regression import LogisticRegression
-from utils import evaluate_classification
+from .data_processing import read_sentiment_examples, build_vocab, bag_of_words
+from .naive_bayes import NaiveBayes
+from .logistic_regression import LogisticRegression
+from .utils import evaluate_classification
 import torch
 
 

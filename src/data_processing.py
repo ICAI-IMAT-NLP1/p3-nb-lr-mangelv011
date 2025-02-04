@@ -19,12 +19,18 @@ def read_sentiment_examples(infile: str) -> List[SentimentExample]:
         A list of SentimentExample objects parsed from the file.
     """
     # TODO: Open the file, go line by line, separate sentence and label, tokenize the sentence and create SentimentExample object
-    with open(infile,'r')as file:
+    with open(infile, 'r', encoding='latin1') as file:
         lines = file.readlines()
-    processed_lines = [line.split("\t") for line in lines]
-    examples: List[SentimentExample] = [SentimentExample(tokenize(line[0]),int(line[1].rstrip('\n'))) for line in processed_lines]
+    
+    # Separa cada línea desde la derecha en 2 partes: [texto completo, etiqueta]
+    processed_lines = [line.rsplit("\t", 1) for line in lines if "\t" in line]
+    
+    # Procesa cada línea extrayendo el texto y convirtiendo la etiqueta a entero
+    examples: List[SentimentExample] = [
+        SentimentExample(tokenize(text), int(label.strip()))
+        for text, label in processed_lines
+    ]
     return examples
-
 
 def build_vocab(examples: List[SentimentExample]) -> Dict[str, int]:
     """
